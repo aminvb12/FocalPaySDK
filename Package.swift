@@ -22,8 +22,8 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "FocalPaySDK",
-            dependencies: ["IonicPortals"],    path: "Sources"),
-    
+            dependencies: [.product(name: "IonicPortals", package: "ionic-portals-ios")], path: "Sources"),
+           
 //        .testTarget(
 //            name: "FocalPaySDKTests",
 //            dependencies: ["FocalPaySDK"]),
