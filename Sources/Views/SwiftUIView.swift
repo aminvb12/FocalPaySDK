@@ -17,7 +17,9 @@ public struct SwiftUIView : View {
       }
     public var body: some View {
          VStack {
-           PortalView(portal: .init(name: "PWA", startDir: "PWA"))
+           //PortalView(portal: .init(name: "PWA", startDir: "PWA"))
+             Text("Hello, world!")
+                 .padding()
          }
      }
 }
