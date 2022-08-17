@@ -17,7 +17,7 @@ public struct SwiftUIView : View {
       }
     public var body: some View {
       
-           PortalView(portal: .init(name: "webapp", startDir: "PWA"))
+           PortalView(portal: .init(name: "webapp", startDir: "focalpayPortal", initialContext:  ["url": "?data=;;ci,1,624d83c313a2ae13989790a8"]))
     
      }
 }
