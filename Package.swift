@@ -23,6 +23,7 @@ let package = Package(
         .target(
             name: "FocalPaySDK",
             dependencies: [  .product(name: "IonicPortals", package: "ionic-portals-ios")]),
+            path: "Sources"
 //        .testTarget(
 //            name: "FocalPaySDKTests",
 //            dependencies: ["FocalPaySDK"]),
