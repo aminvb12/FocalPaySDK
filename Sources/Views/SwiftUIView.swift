@@ -17,8 +17,6 @@ public struct SwiftUIView : View {
       }
     public var body: some View {
          VStack {
-           // Using ExpressibleByStringLiteral conformance
-       
            PortalView(portal: .init(name: "PWA", startDir: "PWA"))
          }
      }
