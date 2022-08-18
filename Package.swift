@@ -24,7 +24,7 @@ let package = Package(
             name: "FocalPaySDK",
             dependencies: [.product(name: "IonicPortals", package: "ionic-portals-ios")], path: "Sources",
             resources: [
-                            .copy("Resources/index.html")
+                            .copy("index.html")
                         ]
         
         ),
