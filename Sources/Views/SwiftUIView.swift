@@ -25,7 +25,7 @@ public struct SwiftUIView : View {
     }
     
     
-    func broadcastQRData (topic:String, data: Any){
+    public func broadcastQRData (topic:String, data: Any){
         IonicPortals.IONPortalsPubSub.publish(message: data, topic: topic)
     }
     
