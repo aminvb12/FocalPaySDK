@@ -28,6 +28,7 @@ public struct SDKPackage : View {
     
     public static func broadcastQRData (topic:String, data: Any) -> Void{
         IonicPortals.IONPortalsPubSub.publish(message: data, topic: topic)
+        
     }
     
 
