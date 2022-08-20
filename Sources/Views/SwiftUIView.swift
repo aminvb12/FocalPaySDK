@@ -66,7 +66,7 @@ public struct SDKPackage : View {
     public var body: some View {
 
         if qrcodeData.count > 0 && authToken.count > 0 {
-                PortalView(portal: .init(name: "webapp", startDir: "focalpayPortal",bundle: .module, initialContext:  ["url": qrcodeData, "deviceID": FCUUID.uuidForDevice(), "callbackURL": callbackURL, "token": authToken]))
+            PortalView(portal: .init(name: "webapp", startDir: "focalpayPortal",bundle: .module, initialContext:  ["url": qrcodeData, "deviceID": userID , "callbackURL": callbackURL, "token": authToken]))
                 
                 
                 //token
