@@ -29,18 +29,19 @@ public struct SDKPackage : View {
     
     
     @Binding var userID: String
-//    @Binding var qrcodeData: String
+    @Binding var qrcodeData: String
     @Binding var callbackURL: String
 
-    @State var qrcodeData: String = ""
-    @State var authToken: String = ""
+//    @State var qrcodeData: String = ""
+//    @State var authToken: String = ""
     
     @ObservedObject var listen =  MonitorChanges()
 
-    public init(userID: Binding<String> ,callbackURL: Binding<String>) {
+    public init(userID: Binding<String> ,callbackURL: Binding<String>, qrcodeData: Binding<String>) {
         
         _userID = userID
         _callbackURL = callbackURL
+        _qrcodeData = qrcodeData
         
         
         //login set token after API call
@@ -56,22 +57,22 @@ public struct SDKPackage : View {
     }
     
     
-    public func actOnQR(QR:String) {
-        //start pwa
-        self.qrcodeData = QR
-        
-    }
+//    public func actOnQR(QR:String) {
+//        //start pwa
+//        self.qrcodeData = QR
+//
+//    }
     
     
     public var body: some View {
 
-        if qrcodeData.count > 0 && authToken.count > 0 {
-            PortalView(portal: .init(name: "webapp", startDir: "focalpayPortal",bundle: .module, initialContext:  ["url": qrcodeData, "deviceID": userID , "callbackURL": callbackURL, "token": authToken]))
+//        if qrcodeData.count > 0 && authToken.count > 0 {
+            PortalView(portal: .init(name: "webapp", startDir: "focalpayPortal",bundle: .module, initialContext:  ["url": qrcodeData, "deviceID": userID , "callbackURL": callbackURL]))
                 
                 
                 //token
             }
       
 
-     }
+//     }
 }
