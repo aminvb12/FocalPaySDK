@@ -73,6 +73,12 @@ public struct SDKPackage : View {
                 
                 //token
             }
+        .onReceive(
+                PortalsPubSub.publisher(for: "authState")
+                    .data().print()
+            ) { _ in
+                
+            }
 
         
         .onAppear {
@@ -90,5 +96,7 @@ public struct SDKPackage : View {
             }
 
         }
+        
+    
 
 }
