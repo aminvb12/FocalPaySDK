@@ -57,16 +57,9 @@ public struct SDKPackage : View {
     }
     
     
-//    public func actOnQR(QR:String) {
-//        //start pwa
-//        self.qrcodeData = QR
-//
-//    }
-    
     
     public var body: some View {
 
-//        if qrcodeData.count > 0 && authToken.count > 0 {
         
         VStack{
             PortalView(portal: .init(name: "webapp", startDir: "focalpayPortal",bundle: .module, initialContext:  ["url": qrcodeData, "deviceID": userID , "callbackURL": callbackURL]))
@@ -75,16 +68,13 @@ public struct SDKPackage : View {
             }
         
         .onReceive(
-                  PortalsPubSub.publisher(for: "authState")
+                  PortalsPubSub.publisher(for: "swish_token")
                       .data(as: String.self)
                       
-              ) { x in
-                  print(x)
+              ) { swishToken in
+                  print(swishToken!)
               }
         
-        .onAppear {
-
-        }
         
     }
     
