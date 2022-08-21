@@ -14,8 +14,8 @@ import FCUUID
 class MonitorChanges: ObservableObject {
     @Published var listener : String = ""
     
-    func fetchData(topic:String) {
-        let res = PortalsPubSub.subscribe(to: topic) { result in
+    func fetchData() {
+        let res = PortalsPubSub.subscribe(to: "authState") { result in
             
             self.listener = result.data as! String
             print("inner: ",result.data as! String)
@@ -69,10 +69,16 @@ public struct SDKPackage : View {
     public var body: some View {
 
 //        if qrcodeData.count > 0 && authToken.count > 0 {
+        
+        VStack{
             PortalView(portal: .init(name: "webapp", startDir: "focalpayPortal",bundle: .module, initialContext:  ["url": qrcodeData, "deviceID": userID , "callbackURL": callbackURL]))
                 
                 //token
+            }.onAppear {
+                listen.fetchData()
             }
+    }
+
       
 
 //     }
