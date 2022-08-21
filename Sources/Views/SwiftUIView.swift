@@ -15,14 +15,12 @@ class MonitorChanges: ObservableObject {
     @Published var listener : String = ""
     
     func fetchData() {
-        let res = PortalsPubSub.subscribe(to: "authState") { result in
+        _ = PortalsPubSub.subscribe(to: "authState") { result in
             
             self.listener = result.data as! String
             print("inner: ",result.data as! String)
    
         }
-        print("outer: ",res)
-        print(res)
     }
 }
 
@@ -74,10 +72,25 @@ public struct SDKPackage : View {
             PortalView(portal: .init(name: "webapp", startDir: "focalpayPortal",bundle: .module, initialContext:  ["url": qrcodeData, "deviceID": userID , "callbackURL": callbackURL]))
                 
                 //token
-            }.onAppear {
-                listen.fetchData()
             }
-    }
+
+        
+        .onAppear {
+            //                listen.fetchData()
+            Task{
+                let eventStream = PortalsPubSub.subscribe(to: "authState")
+                    .compactMap { $0.data as? String }
+                
+     
+
+                for await event in eventStream
+                    where event == "cancel" || event == "success" {
+                        print(event)
+                    }
+                }
+            }
+
+        }
 
       
 
