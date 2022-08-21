@@ -74,18 +74,15 @@ public struct SDKPackage : View {
                 //token
             }
         
+        .onReceive(
+                  PortalsPubSub.publisher(for: "authState")
+                      .data(as: String.self)
+                      
+              ) { x in
+                  print(x)
+              }
         
         .onAppear {
-            Task{
-                let x = PortalsPubSub.publisher(for: "authState")
-                    .data(as: String.self)
-                    .print()
-                    
-                print("fu: ", x)
-     
-
-              
-            }
 
         }
         
