@@ -18,8 +18,10 @@ class MonitorChanges: ObservableObject {
         let res = PortalsPubSub.subscribe(to: topic) { result in
             
             self.listener = result.data as! String
+            print("inner: ",result.data as! String)
    
         }
+        print("outer: ",res)
         print(res)
     }
 }
