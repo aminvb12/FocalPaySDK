@@ -76,7 +76,6 @@ public struct SDKPackage : View {
 
         
         .onAppear {
-            //                listen.fetchData()
             Task{
                 let eventStream = PortalsPubSub.subscribe(to: "authState")
                     .compactMap { $0.data as? String }
@@ -92,7 +91,4 @@ public struct SDKPackage : View {
 
         }
 
-      
-
-//     }
 }
