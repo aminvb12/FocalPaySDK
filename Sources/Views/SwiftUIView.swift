@@ -31,18 +31,21 @@ public struct SDKPackage : View {
     @Binding var userID: String
     @Binding var qrcodeData: String
     @Binding var callbackURL: String
+    
+     var doSomething : (_ type: String, _ value:Any) -> Void
 
 //    @State var qrcodeData: String = ""
 //    @State var authToken: String = ""
     
     @ObservedObject var listen =  MonitorChanges()
 
-    public init(userID: Binding<String> ,callbackURL: Binding<String>, qrcodeData: Binding<String>) {
+    public init(userID: Binding<String> ,callbackURL: Binding<String>, qrcodeData: Binding<String>, handler: @escaping (_ type:String,_ type: Any) -> Void) {
         
         _userID = userID
         _callbackURL = callbackURL
         _qrcodeData = qrcodeData
         
+        doSomething = handler
         
         //login set token after API call
         
@@ -73,6 +76,8 @@ public struct SDKPackage : View {
                       
               ) { swishToken in
                   print(swishToken!)
+                  
+                  doSomething("swish_token", swishToken)
               }
         
         
