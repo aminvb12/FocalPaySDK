@@ -73,30 +73,21 @@ public struct SDKPackage : View {
                 
                 //token
             }
-        .onReceive(
-                PortalsPubSub.publisher(for: "authState")
-                    .data().print()
-            ) { _ in
-                
-            }
-
         
         .onAppear {
             Task{
-                let eventStream = PortalsPubSub.subscribe(to: "authState")
-                    .compactMap { $0.data as? String }
-                
+                let eventStream = PortalsPubSub.publisher(for: "authState")
+                    .data(as: String.self)
+                    
+                print(eventStream)
      
 
-                for await event in eventStream
-                    where event == "cancel" || event == "success" {
-                        print(event)
-                    }
-                }
+              
             }
 
         }
         
+    }
     
 
 }
