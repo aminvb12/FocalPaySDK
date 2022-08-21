@@ -74,21 +74,14 @@ public struct SDKPackage : View {
                 //token
             }
         
-        .onReceive(
-                  PortalsPubSub.publisher(for: "authState")
-                      .data(as: String.self)
-                      .print()
-                      .filter { $0 == "cancel" || $0 == "success" }
-              ) { _ in
-              
-              }
         
         .onAppear {
             Task{
-                let eventStream = PortalsPubSub.publisher(for: "authState")
+                let x = PortalsPubSub.publisher(for: "authState")
                     .data(as: String.self)
+                    .print()
                     
-                print(eventStream)
+                print("fu: ", x)
      
 
               
