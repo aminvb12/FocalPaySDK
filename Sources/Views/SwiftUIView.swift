@@ -32,7 +32,7 @@ public struct SDKPackage : View {
     @Binding var qrcodeData: String
     @Binding var callbackURL: String
     
-     var doSomething : (_ type: String, _ value:Any) -> Void
+     var doSomething : (_ type: String, _ value:Any?) -> Void
 
 //    @State var qrcodeData: String = ""
 //    @State var authToken: String = ""
