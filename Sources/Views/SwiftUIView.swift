@@ -68,6 +68,11 @@ public struct SDKPackage : View {
             PortalView(portal: .init(name: "webapp", startDir: "focalpayPortal",bundle: .module, initialContext:  ["url": qrcodeData, "deviceID": userID , "callbackURL": callbackURL]))
                 
                 //token
+            
+            
+            
+            
+            
             }
         
         .onReceive(
