@@ -68,11 +68,6 @@ public struct SDKPackage : View {
             PortalView(portal: .init(name: "webapp", startDir: "focalpayPortal",bundle: .module, initialContext:  ["url": qrcodeData, "deviceID": userID , "callbackURL": callbackURL]))
                 
                 //token
-            
-            
-            
-            
-            
             }
         
         .onReceive(
@@ -80,11 +75,15 @@ public struct SDKPackage : View {
                       .data(as: String.self)
                       
               ) { swishToken in
-                  print(swishToken!)
-                  
                   doSomething("swish_token", swishToken)
               }
         
+              .onReceive(PortalsPubSub.publisher(for: "order_params")
+                .data(as: String.self)){ orderParams in
+                   
+                        print(orderParams)
+//                        doSomething("orderParams", orderParams)
+                }
         
     }
     
