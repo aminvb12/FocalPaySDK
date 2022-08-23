@@ -79,9 +79,9 @@ public struct SDKPackage : View {
               }
         
               .onReceive(PortalsPubSub.publisher(for: "order_params")
-                .data(as: String.self)){ orderParams in
+                .data()){ orderParams in
                    
-                        print(orderParams)
+                    print(orderParams as Any)
 //                        doSomething("orderParams", orderParams)
                 }
         
