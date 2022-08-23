@@ -70,17 +70,10 @@ public struct SDKPackage : View {
                 //token
             }
         
-        .onReceive(
-                  PortalsPubSub.publisher(for: "swish_token")
-                      .data(as: String.self)
-                      
-              ) { swishToken in
-                  doSomething("swish_token", swishToken)
-              }
         
-              .onReceive(PortalsPubSub.publisher(for: "order_params")
+              .onReceive(PortalsPubSub.publisher(for: "payment_parameter")
                 .data()){ orderParams in
-                        doSomething("order_params", orderParams!)
+                        doSomething("payment_parameter", orderParams!)
                 }
         
     }
