@@ -82,7 +82,7 @@ public struct SDKPackage : View {
                 .data()){ orderParams in
                    
                     print(orderParams!)
-//                        doSomething("orderParams", orderParams)
+                        doSomething("orderParams", orderParams!)
                 }
         
     }
