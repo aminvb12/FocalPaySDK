@@ -42,13 +42,13 @@ public struct SDKPackage : View {
     
     @ObservedObject var listen =  MonitorChanges()
     
-    public init(userID: Binding<String> ,callbackURL: Binding<String>, qrcodeData: Binding<String>, handler: @escaping (_ type:String,_ type: Any) -> Void, storeID: Binding<String?>, orderID: Binding<String?>) {
+    public init(userID: Binding<String> ,callbackURL: Binding<String>, qrcodeData: Binding<String>, handler: @escaping (_ type:String,_ type: Any) -> Void, storeID: Binding<String?>?, orderID: Binding<String?>?) {
         
         _userID = userID
         _callbackURL = callbackURL
         _qrcodeData = qrcodeData
-        _storeID = storeID
-        _orderID = orderID
+        _storeID = storeID!
+        _orderID = orderID!
         
         doSomething = handler
         
@@ -70,7 +70,7 @@ public struct SDKPackage : View {
         
         
         VStack{
-            PortalView(portal: .init(name: "webapp", startDir: "focalpayPortal",bundle: .module, initialContext:  ["url": qrcodeData, "deviceID": userID , "callbackURL": callbackURL, "storeId": storeID ?? "", "orderId": orderID ?? ""]))
+            PortalView(portal: .init(name: "webapp", startDir: "focalpayPortal",bundle: .module, initialContext:  ["url": qrcodeData, "deviceID": userID , "callbackURL": callbackURL, "storeId": storeID!, "orderId": orderID!]))
             
             //token
         }
