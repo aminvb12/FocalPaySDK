@@ -47,8 +47,8 @@ public struct SDKPackage : View {
         _userID = userID
         _callbackURL = callbackURL
         _qrcodeData = qrcodeData
-        _storeID = storeID!
-        _orderID = orderID!
+        _storeID = storeID ?? Binding.constant(nil)
+        _orderID = orderID ?? Binding.constant(nil)
         
         doSomething = handler
         
