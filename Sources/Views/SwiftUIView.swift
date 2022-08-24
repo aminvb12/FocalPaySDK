@@ -19,7 +19,7 @@ class MonitorChanges: ObservableObject {
             
             self.listener = result.data as! String
             print("inner: ",result.data as! String)
-   
+            
         }
     }
 }
@@ -32,18 +32,23 @@ public struct SDKPackage : View {
     @Binding var qrcodeData: String
     @Binding var callbackURL: String
     
-     var doSomething : (_ type: String, _ value:Any?) -> Void
-
-//    @State var qrcodeData: String = ""
-//    @State var authToken: String = ""
+    @Binding var storeID: String?
+    @Binding var orderID: String?
+    
+    var doSomething : (_ type: String, _ value:Any?) -> Void
+    
+    //    @State var qrcodeData: String = ""
+    //    @State var authToken: String = ""
     
     @ObservedObject var listen =  MonitorChanges()
-
-    public init(userID: Binding<String> ,callbackURL: Binding<String>, qrcodeData: Binding<String>, handler: @escaping (_ type:String,_ type: Any) -> Void) {
+    
+    public init(userID: Binding<String> ,callbackURL: Binding<String>, qrcodeData: Binding<String>, handler: @escaping (_ type:String,_ type: Any) -> Void, storeID: Binding<String?>, orderID: Binding<String?>) {
         
         _userID = userID
         _callbackURL = callbackURL
         _qrcodeData = qrcodeData
+        _storeID = storeID
+        _orderID = orderID
         
         doSomething = handler
         
@@ -62,21 +67,20 @@ public struct SDKPackage : View {
     
     
     public var body: some View {
-
+        
         
         VStack{
-            PortalView(portal: .init(name: "webapp", startDir: "focalpayPortal",bundle: .module, initialContext:  ["url": qrcodeData, "deviceID": userID , "callbackURL": callbackURL]))
-                
-                //token
+            PortalView(portal: .init(name: "webapp", startDir: "focalpayPortal",bundle: .module, initialContext:  ["url": qrcodeData, "deviceID": userID , "callbackURL": callbackURL, "storeId": storeID ?? "", "orderId": orderID ?? ""]))
+            
+            //token
+        }
+        
+        .onReceive(PortalsPubSub.publisher(for: "payment_parameter")
+            .data()){ orderParams in
+                doSomething("payment_parameter", orderParams!)
             }
-        
-        
-              .onReceive(PortalsPubSub.publisher(for: "payment_parameter")
-                .data()){ orderParams in
-                        doSomething("payment_parameter", orderParams!)
-                }
         
     }
     
-
+    
 }
