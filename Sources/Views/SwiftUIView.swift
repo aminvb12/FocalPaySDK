@@ -70,7 +70,7 @@ public struct SDKPackage : View {
         
         
         VStack{
-            PortalView(portal: .init(name: "webapp", startDir: "focalpayPortal",bundle: .module, initialContext:  ["url": qrcodeData, "deviceID": userID , "callbackURL": callbackURL, "storeId": storeID!, "orderId": orderID!]))
+            PortalView(portal: .init(name: "webapp", startDir: "focalpayPortal",bundle: .module, initialContext:  ["url": qrcodeData, "deviceID": userID , "callbackURL": callbackURL, "storeId": storeID ?? "", "orderId": orderID ?? ""]))
             
             //token
         }
