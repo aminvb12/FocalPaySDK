@@ -42,13 +42,13 @@ public struct SDKPackage : View {
     
     @ObservedObject var listen =  MonitorChanges()
     
-    public init(userID: Binding<String> ,callbackURL: Binding<String>, qrcodeData: Binding<String>, handler: @escaping (_ type:String,_ type: Any) -> Void, storeID: Binding<String?>?, orderID: Binding<String?>?) {
+    public init(userID: Binding<String> ,callbackURL: Binding<String>, qrcodeData: Binding<String>, handler: @escaping (_ type:String,_ type: Any) -> Void, storeID: Binding<String?> = .constant(nil), orderID: Binding<String?> = .constant(nil)) {
         
         _userID = userID
         _callbackURL = callbackURL
         _qrcodeData = qrcodeData
-        _storeID = storeID ?? Binding.constant(nil)
-        _orderID = orderID ?? Binding.constant(nil)
+        _storeID = storeID
+        _orderID = orderID
         
         doSomething = handler
         
