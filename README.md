@@ -20,7 +20,7 @@
 ### Built With
 
 
-* [![Swift][Swift.js]][Swift-url]
+* [![Swift][Swift]][Swift-url]
 * [![React][React.js]][React-url]
 
 
