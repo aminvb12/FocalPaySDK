@@ -4,7 +4,7 @@
 <br />
 <div align="left">
   <a href="https://github.com/FocalPaySDK">
-    <img src="imag/focalpay-logo.png" alt="Logo" width="80" height="80">
+    <img src="img/focalpay-logo.png" alt="Logo" width="120">
   </a>
 
   <h3 align="left">FocalPaySDK</h3>
@@ -34,9 +34,11 @@ To get a local copy up and running follow these simple example steps.
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
-* npm
+* SPM
   ```sh
-  npm install npm@latest -g
+  Add https://github.com/aminvb12/FocalPaySDK in the Xcode "Swift Package Dependencies" tab in the project configuration.
+  The suggested version range is "Up to Next Minor Version" to prevent auto-updating
+  to a breaking version before Ionic Portals iOS reaches version 1.0
   ```
 
 ### Installation
