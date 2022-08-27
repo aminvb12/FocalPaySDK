@@ -3,8 +3,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="left">
-  <a href="https://github.com/othneildrew/FocalPaySDK">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  <a href="https://github.com/FocalPaySDK">
+    <img src="imag/focalpay-logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="left">FocalPaySDK</h3>
