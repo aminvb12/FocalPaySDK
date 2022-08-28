@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-enum StateType {
+public enum StateType {
     case scan, receipt
 }
 
@@ -16,7 +16,7 @@ enum StateType {
 
 public struct MainSDK: View {
 
-    @Binding var state: String
+    @Binding var state: StateType
 
     @Binding var userID: String
     @Binding var qrcodeData: String
@@ -29,11 +29,11 @@ public struct MainSDK: View {
     var callback : (_ type: String, _ value:Any?) -> Void
     
     
-    public init(state: Binding<String> , userID: Binding<String> , qrcodeData: Binding<String>, callbackURL: Binding<String>, storeId: Binding<String>, orderId: Binding<String> ,paymentCallbackHandler: @escaping (_ type:String,_ type: Any) -> Void) {
+    public init(currenctState: Binding<StateType> , userID: Binding<String> , qrcodeData: Binding<String>, callbackURL: Binding<String>, storeId: Binding<String>, orderId: Binding<String> ,paymentCallbackHandler: @escaping (_ type:String,_ type: Any) -> Void) {
         
         
         
-        _state = state
+        _state = currenctState
         _userID = userID
         _qrcodeData = qrcodeData
         _callbackURL = callbackURL
@@ -45,9 +45,9 @@ public struct MainSDK: View {
     
     public var body: some View {
         VStack {
-            if state == "receipt" {
+            if state == .scan {
                 ReceiptView(userID: $userID, storeID: $storeID, orderID: $orderID)
-            } else if state == "scan" {
+            } else if state == .receipt{
                 SDKPackage(userID: $userID, callbackURL: $callbackURL, qrcodeData: $qrcodeData, paymentCallbackHandler: callback)
             }
         }
