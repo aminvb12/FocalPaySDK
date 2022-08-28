@@ -14,7 +14,7 @@ enum StateType {
 
 
 
-struct MainSDK: View {
+public struct MainSDK: View {
 
     @Binding var state: StateType
 
