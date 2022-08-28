@@ -28,7 +28,7 @@ public struct MainSDK: View {
     
     var callback : (_ type: String, _ value:Any?) -> Void
     
-    var body: some View {
+    public var body: some View {
         VStack {
             if state == .receipt {
                 ReceiptView(userID: $userID, storeID: $storeID, orderID: $orderID)
