@@ -9,7 +9,7 @@ import SwiftUI
 
 
 public enum StateType {
-    case scan, receipt
+    case scan, receipt, none
 }
 
 
@@ -29,7 +29,8 @@ public struct MainSDK: View {
     var callback : (_ type: String, _ value:Any?) -> Void
     
     
-    public init(currenctState: Binding<StateType> , userID: Binding<String> , qrcodeData: Binding<String>, callbackURL: Binding<String>, storeId: Binding<String>, orderId: Binding<String> ,paymentCallbackHandler: @escaping (_ type:String,_ type: Any) -> Void) {
+    public init(currenctState: Binding<StateType> = .constant(.none
+    ) , userID: Binding<String> , qrcodeData: Binding<String>, callbackURL: Binding<String>, storeId: Binding<String>, orderId: Binding<String> ,paymentCallbackHandler: @escaping (_ type:String,_ type: Any) -> Void) {
         
         
         
