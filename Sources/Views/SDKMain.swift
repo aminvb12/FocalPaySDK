@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-enum StateType {
+public enum StateType {
     case scan, receipt
 }
 
@@ -27,6 +27,22 @@ public struct MainSDK: View {
     @Binding var orderID: String
     
     var callback : (_ type: String, _ value:Any?) -> Void
+    
+    
+    public init(state: Binding<StateType> , userID: Binding<String> , qrcodeData: Binding<String>, callbackURL: Binding<String>, storeId: Binding<String>, orderId: Binding<String> ,paymentCallbackHandler: @escaping (_ type:String,_ type: Any) -> Void) {
+        
+        
+        
+        _state = state
+        _userID = userID
+        _qrcodeData = qrcodeData
+        _callbackURL = callbackURL
+        _storeID = storeId
+        _orderID = orderId
+        
+        callback = paymentCallbackHandler
+        
+    }
     
     public var body: some View {
         VStack {
