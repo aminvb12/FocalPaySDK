@@ -45,11 +45,11 @@ public struct MainSDK: View {
     
     public var body: some View {
         VStack {
-            if state == "receipt" {
-                ReceiptView(userID: $userID, storeID: $storeID, orderID: $orderID)
-            } else if state == "scan" {
+//            if state == "receipt" {
+//                ReceiptView(userID: $userID, storeID: $storeID, orderID: $orderID)
+//            } else if state == "scan" {
                 SDKPackage(userID: $userID, callbackURL: $callbackURL, qrcodeData: $qrcodeData, paymentCallbackHandler: callback)
-            }
+//            }
         }
     }
 }
