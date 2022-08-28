@@ -39,7 +39,6 @@ public struct MainSDK: View {
         _callbackURL = callbackURL
         _storeID = storeId
         _orderID = orderId
-        
         callback = paymentCallbackHandler
         
     }
