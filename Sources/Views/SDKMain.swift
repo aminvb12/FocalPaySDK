@@ -14,9 +14,9 @@ enum StateType {
 
 
 
-struct Main: View {
+struct MainSDK: View {
 
-    @Binding var state: StateType 
+    @Binding var state: StateType
 
     @Binding var userID: String
     @Binding var qrcodeData: String
