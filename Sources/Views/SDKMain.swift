@@ -9,12 +9,14 @@ import SwiftUI
 
 
 public enum StateType {
-    case scan, receipt, none
+    case SelfScanning, PaymentResult, Init
 }
 
+//public enum callbackType {}
 
 
-public struct MainSDK: View {
+
+public struct FocalpayAppSDK: View {
 
     @Binding var state: StateType
 
@@ -29,15 +31,15 @@ public struct MainSDK: View {
     var callback : (_ type: String, _ value:Any?) -> Void
     
     
-    public init(currenctState: Binding<StateType> = .constant(.none
-    ) , userID: Binding<String> , qrcodeData: Binding<String>, callbackURL: Binding<String>, storeId: Binding<String>, orderId: Binding<String> ,paymentCallbackHandler: @escaping (_ type:String,_ type: Any) -> Void) {
+    public init(currenctState: Binding<StateType> = .constant(.Init
+    ) , userID: Binding<String> , qrcodeData: Binding<String>, appUniversalLink: Binding<String>, storeId: Binding<String>, orderId: Binding<String> ,paymentCallbackHandler: @escaping (_ type:String,_ type: Any) -> Void) {
         
         
         
         _state = currenctState
         _userID = userID
         _qrcodeData = qrcodeData
-        _callbackURL = callbackURL
+        _callbackURL = appUniversalLink
         _storeID = storeId
         _orderID = orderId
         callback = paymentCallbackHandler
@@ -46,9 +48,9 @@ public struct MainSDK: View {
     
     public var body: some View {
         VStack {
-            if state == .receipt {
+            if state == .PaymentResult {
                 ReceiptView(userID: $userID, storeID: $storeID, orderID: $orderID)
-            } else if state == .scan{
+            } else if state == .SelfScanning{
                 SDKPackage(userID: $userID, callbackURL: $callbackURL, qrcodeData: $qrcodeData, paymentCallbackHandler: callback)
             }
         }
