@@ -24,6 +24,8 @@ public struct SDKPackage : View {
     
     public init(userID: Binding<String> ,callbackURL: Binding<String>, qrcodeData: Binding<String>, paymentCallbackHandler: @escaping (_ type:String,_ type: Any) -> Void) {
         
+        print(userID)
+        
         _userID = userID
         _callbackURL = callbackURL
         _qrcodeData = qrcodeData
