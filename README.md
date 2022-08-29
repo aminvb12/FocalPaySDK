@@ -3,18 +3,18 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="left">
-  <a href="https://github.com/FocalPaySDK">
+  <a href="https://github.com/FocalpaySDK">
     <img src="img/focalpay-logo.png" alt="Logo" width="120">
   </a>
 
-  <h3 align="left">FocalPaySDK</h3>
+  <h3 align="left">FocalpaySDK</h3>
 
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
 
-`FocalPaySDK` is a standalone package that integrates with applications which developed with `SWIFT` language.
+`FocalpaySDK` is a standalone package that integrates with applications which developed with `SWIFT` language.
 
 
 ### Built With
@@ -37,7 +37,7 @@ Add this Swift package in Xcode using its Github repository url.
   
   * SPM
   ```
-  Add https://github.com/aminvb12/FocalPaySDK in the Xcode "Swift Package Dependencies" tab in the project configuration.
+  Add https://github.com/aminvb12/FocalpaySDK in the Xcode "Swift Package Dependencies" tab in the project configuration.
   The suggested version range is "Up to Next Minor Version" to prevent auto-updating
   to a breaking version before Ionic Portals iOS reaches version 1.0
   ```
@@ -54,13 +54,13 @@ You should import `FocalpaySDK` and then init the SDK with these parameters:
   
 ## Examples
 
-Here's an example on how to integrate the `FocalPaySDK`:
+Here's an example on how to integrate the `FocalpaySDK`:
 
 ```swift
 import SwiftUI
 import CodeScanner
 import FCUUID
-import FocalPaySDK
+import FocalpaySDK
 
 struct ExampleView: View {
     
