@@ -31,88 +31,117 @@
 This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
-### Prerequisites
+### Installation
 
-This is an example of how to list things you need to use the software and how to install them.
-* SPM
-  ```sh
+Add this Swift package in Xcode using its Github repository url.
+  
+  * SPM
+  ```
   Add https://github.com/aminvb12/FocalPaySDK in the Xcode "Swift Package Dependencies" tab in the project configuration.
   The suggested version range is "Up to Next Minor Version" to prevent auto-updating
   to a breaking version before Ionic Portals iOS reaches version 1.0
   ```
-
-### Installation
-
-_Below is an example of how you can install and integrate `FocalPaySDK` with your SWIFT application. Add `FocalPaySDK` as a package dependancy._
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
 <!-- USAGE EXAMPLES -->
-## Usage
-You should import `FocalpaySDK` and then init the SDK with these 4 parameters:
+## Basic Usage
+You should import `FocalpaySDK` and then init the SDK with these parameters:
+* currentState : Enum{case scan,receipt,none} as StateType 
 * userId : String
-* callBack URL : String
-* QR code data : String
-* handler : String
+* qrcodeData : String  
+* callBackURL : String
+* storeId : String
+* orderId : String
+* handler : Callback Function
+  
+## Examples
 
-<!--Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.-->
+Here's an example on how to integrate the `FocalPaySDK`:
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+```swift
+import SwiftUI
+import CodeScanner
+import FCUUID
+import FocalPaySDK
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+struct ExampleView: View {
+    
+    @State private var isPresentingScanner = false
+    @State private var userID: String = FCUUID.uuidForDevice() // user unique id  
+    @State private var callbackURL: String = "" // callbackURL is called after the payment is finished. It should be URL- encoded and can be for example an app URL or a web URL
+    @State private var showSDK = false
+    @State private var scannedCode = ""
+    
+    @State private var store_id: String = ""
+    @State private var order_id: String = ""
+    
+    @State private var currentState: StateType = .none // currentState is the running state of SDK 
+    
+    func handler(topic: String, value: Any?)  -> Void{
+        // callback function for the purpose of fetching Swish payment token, orderId and storeId
+        
+        switch topic {
+        case "payment_parameter":
+              
+            let dictionery = (value as! [String:String])
+            let token = dictionery["token"]!
+            let storeId = dictionery["storeId"]!
+            let orderId = dictionery["orderId"]!
+            
+            self.store_id = storeId
+            self.order_id = orderId
+            
+            let swishURL = URL(string: "swish://paymentrequest?token=\(token)&callbackurl=sdk-integeration://\(storeId)-\(orderId)")!
+            
+            if UIApplication.shared.canOpenURL(swishURL)
+            {
+                
+                UIApplication.shared.open(swishURL)
+            }
+            
+            break
+        default:
+            print("default")
+        }
+      
+    }
+ 
+    var body: some View {
+        NavigationView{
+            VStack(spacing: 2) {
+                
+                if currentState != .none {
+                // create a new instance of FocalPaySDK
+                    
+                    NavigationLink("FocalPaySDK", destination:
+                                    MainSDK(currenctState: $currentState , userID: $userID, qrcodeData: $scannedCode, callbackURL: $callbackURL, storeId: $store_id, orderId: $order_id, paymentCallbackHandler: handler),isActive: $showSDK).hidden().navigationBarTitle("",displayMode: .inline)
+                        .navigationBarHidden(true)
+                }
 
+                Button("Check-in to store") {
+                    showSDK = false
+                    isPresentingScanner = true
+                }
+                
+                Text("Scan the QR-Code to check-in to store.")
+            }
+            .sheet(isPresented: $isPresentingScanner) {
+                CodeScannerView(codeTypes: [.qr]) { response in
+                    if case let .success(result) = response {
+                        scannedCode = result.string
+                        showSDK = true
+                        isPresentingScanner = false
+                        currentState = .scan // change the state of running SDK to the scan mode
+                    }
+                }
+            }
+            .onOpenURL { url in
+                currentState = .receipt // change the state of running SDK to the receipt mode
+            }
 
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
-
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
+        }
+    }
+    
+}
+```  
 
 <!-- LICENSE -->
 ## License
@@ -122,7 +151,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
 <!-- CONTACT -->
 ## Contact
 
@@ -130,7 +158,7 @@ Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.c
 
 Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 
 
@@ -148,7 +176,7 @@ Use this space to list resources you find helpful and would like to give credit 
 * [Font Awesome](https://fontawesome.com)
 * [React Icons](https://react-icons.github.io/react-icons/search)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 
 
