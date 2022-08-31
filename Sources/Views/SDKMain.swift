@@ -49,7 +49,7 @@ public struct FocalpayAppSDK: View {
     public var body: some View {
         VStack {
             if state == .PaymentResult {
-                ReceiptView(userID: $userID, storeID: $storeID, orderID: $orderID)
+                ReceiptView( storeID: $storeID, orderID: $orderID, qrcodeData: $qrcodeData)
             } else if state == .SelfScanning{
                 SDKPackage(userID: $userID, callbackURL: $callbackURL, qrcodeData: $qrcodeData, paymentCallbackHandler: callback)
             }
