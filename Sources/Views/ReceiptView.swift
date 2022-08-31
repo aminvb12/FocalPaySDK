@@ -44,7 +44,6 @@ public struct ReceiptView : View {
             PortalView(portal: .init(name: "webapp", startDir: "focalpayPortal",bundle: .module, initialContext:  [ "storeId": storeID , "orderId": orderID, "url": qrcodeData ]))
         }
         
-        
     }
     
     
