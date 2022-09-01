@@ -12,6 +12,7 @@ import FCUUID
 
 
 
+@available(macOS 10.15, *)
 public struct ReceiptView : View {
     
     @Binding var storeID: String
