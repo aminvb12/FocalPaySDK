@@ -12,7 +12,7 @@ import FCUUID
 
 
 public enum PaymentFlowType {
-    case SDKContext, ApplicationContext
+    case SDKContext, ApplicationContext, none
 }
 
 
