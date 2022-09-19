@@ -16,6 +16,7 @@ public enum StateType {
 
 
 
+@available(macOS 10.15, *)
 public struct FocalpayAppSDK: View {
 
     @Binding var state: StateType
