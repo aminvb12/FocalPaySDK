@@ -56,7 +56,7 @@ public struct SDKPackage : View {
         
         VStack{
             
-            PortalView(portal: .init(name: "webapp", startDir: "focalpayPortal",bundle: .module, initialContext:  ["url": qrcodeData, "deviceID": userID , "callbackURL": callbackURL, "paymentFlowType": paymentFlowType]))
+            PortalView(portal: .init(name: "webapp", startDir: "focalpayPortal",bundle: .module, initialContext:  ["url": qrcodeData, "deviceID": userID , "callbackURL": callbackURL, "paymentFlowType": paymentFlowType == .ApplicationContext ? "application" : "sdk"]))
 
         }
         
