@@ -4,7 +4,7 @@
 <br />
 <div align="left">
   <a href="https://github.com/FocalpaySDK">
-    <img src="img/focalpay-logo.png" alt="Logo" width="120">
+    <img src="img/focalpay-logo.png" alt="Logo" width="160">
   </a>
 
   <h3 align="left">FocalpaySDK</h3>
@@ -14,82 +14,86 @@
 ## About The Project
 
 
-`FocalpaySDK` is a standalone package that integrates with applications which developed with `SWIFT` language.
+`FocalpaySDK` is a standalone package that can be integrated with applications developed in Swift language.
 
 
 ### Built With
 
 
 * [![Swift][Swift]][Swift-url]
-* [![React][React.js]][React-url]
 
 
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Below you have the instructions on how to setup your project locally and intregrate the SDK into your application.
+To get a local copy follow the steps below.
 
 ### Installation
-
-Add this Swift package in Xcode using its Github repository url.
   
-  * SPM
-  ```
-  Add https://github.com/aminvb12/FocalpaySDK in the Xcode "Swift Package Dependencies" tab in the project configuration.
-  The suggested version range is "Up to Next Minor Version" to prevent auto-updating
-  to a breaking version before Ionic Portals iOS reaches version 1.0
-  ```
+Using SPM, add https://github.com/Focalpay/FocalpaySDK in the Xcode "Swift Package Dependencies" tab in the project configuration.
+In order to setup the access to private repository in Github, please refer to this [[link]](https://stackoverflow.com/questions/47842479/how-to-use-swift-package-manager-with-private-repos)
+
 <!-- USAGE EXAMPLES -->
 ## Basic Usage
-You should import `FocalpaySDK` and then init the SDK with these parameters:
-* currentState : Enum{case scan,receipt,none} as StateType 
+You should import `FocalpaySDK` into your program and then initiate the SDK with these parameters:
+* currentState : Enum{`case SelfScanning, PaymentResult, Init`} as StateType 
 * userId : String
 * qrcodeData : String  
-* callBackURL : String
+* appUniversalLink : String
 * storeId : String
 * orderId : String
-* handler : Callback Function
-  
+* paymentCallbackHandler : Callback Function
+ 
 ## Examples
 
-Here's an example on how to integrate the `FocalpaySDK`:
+Here is a sample code of a very simple Swift application integrating `FocalpaySDK`:
 
 ```swift
+
 import SwiftUI
 import CodeScanner
 import FCUUID
-import FocalpaySDK
+import FocalPaySDK
 
-struct ExampleView: View {
+
+
+struct QRCodeScannerView: View {
     
     @State private var isPresentingScanner = false
-    @State private var userID: String = FCUUID.uuidForDevice() // user unique id  
-    @State private var callbackURL: String = "" // callbackURL is called after the payment is finished. It should be URL- encoded and can be for example an app URL or a web URL
+    @State private var userID: String = FCUUID.uuidForDevice()
+    @State private var callbackURL: String = ""
     @State private var showSDK = false
+    @State private var showReceipt = false
     @State private var scannedCode = ""
     
     @State private var store_id: String = ""
     @State private var order_id: String = ""
     
-    @State private var currentState: StateType = .none // currentState is the running state of SDK 
+    @State private var currentState: StateType = .Init
     
     func handler(topic: String, value: Any?)  -> Void{
-        // callback function for the purpose of fetching Swish payment token, orderId and storeId
+        
         
         switch topic {
         case "payment_parameter":
-              
+            
+            
+            
             let dictionery = (value as! [String:String])
+            
             let token = dictionery["token"]!
             let storeId = dictionery["storeId"]!
             let orderId = dictionery["orderId"]!
-            
+            //
             self.store_id = storeId
             self.order_id = orderId
             
+            
             let swishURL = URL(string: "swish://paymentrequest?token=\(token)&callbackurl=sdk-integeration://\(storeId)-\(orderId)")!
+            
+            
             
             if UIApplication.shared.canOpenURL(swishURL)
             {
@@ -101,21 +105,24 @@ struct ExampleView: View {
         default:
             print("default")
         }
-      
+        
+        
     }
- 
+    
+    
     var body: some View {
         NavigationView{
             VStack(spacing: 2) {
                 
-                if currentState != .none {
-                // create a new instance of FocalPaySDK
+                if currentState != .Init {
+                    
                     
                     NavigationLink("FocalPaySDK", destination:
-                                    MainSDK(currenctState: $currentState , userID: $userID, qrcodeData: $scannedCode, callbackURL: $callbackURL, storeId: $store_id, orderId: $order_id, paymentCallbackHandler: handler),isActive: $showSDK).hidden().navigationBarTitle("",displayMode: .inline)
+                                    FocalpayAppSDK(currenctState: $currentState , userID: $userID, qrcodeData: $scannedCode, appUniversalLink: $callbackURL, storeId: $store_id, orderId: $order_id, paymentCallbackHandler: handler),isActive: $showSDK).hidden().navigationBarTitle("",displayMode: .inline)
                         .navigationBarHidden(true)
                 }
-
+                
+                
                 Button("Check-in to store") {
                     showSDK = false
                     isPresentingScanner = true
@@ -129,55 +136,36 @@ struct ExampleView: View {
                         scannedCode = result.string
                         showSDK = true
                         isPresentingScanner = false
-                        currentState = .scan // change the state of running SDK to the scan mode
+                        currentState = .SelfScanning
                     }
                 }
             }
             .onOpenURL { url in
-                currentState = .receipt // change the state of running SDK to the receipt mode
+                currentState = .PaymentResult
             }
-
+            
+            
+            
         }
     }
     
 }
+
+
+
 ```  
 
 <!-- LICENSE -->
 ## License
+This program is only distributed to Focalpay partners only and any redistribution of it is strictly prohibited.
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- CONTACT -->
 ## Contact
+  contact@focalpay.se
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
-
-
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
-
-
-
+Project Link: [[https://github.com/Focalpay/FocalpaySDK]](https://github.com/Focalpay/FocalpaySDK)
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
