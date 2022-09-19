@@ -29,11 +29,14 @@ public struct FocalpayAppSDK: View {
     @Binding var storeID: String
     @Binding var orderID: String
     
+    @Binding var paymentFlowType : PaymentFlowType
+    
     var callback : (_ type: String, _ value:Any?) -> Void
     
     
     public init(currenctState: Binding<StateType> = .constant(.Init
-    ) , userID: Binding<String> , qrcodeData: Binding<String>, appUniversalLink: Binding<String>, storeId: Binding<String>, orderId: Binding<String> ,paymentCallbackHandler: @escaping (_ type:String,_ type: Any) -> Void) {
+    ) , userID: Binding<String> , qrcodeData: Binding<String>, appUniversalLink: Binding<String>, storeId: Binding<String>, orderId: Binding<String> ,paymentCallbackHandler: @escaping (_ type:String,_ type: Any) -> Void, paymentFlowType: Binding<PaymentFlowType> = .constant(.ApplicationContext
+    )) {
         
         
         
@@ -44,6 +47,7 @@ public struct FocalpayAppSDK: View {
         _storeID = storeId
         _orderID = orderId
         callback = paymentCallbackHandler
+        _paymentFlowType = paymentFlowType
         
     }
     
@@ -52,7 +56,8 @@ public struct FocalpayAppSDK: View {
             if state == .PaymentResult {
                 ReceiptView( storeID: $storeID, orderID: $orderID, qrcodeData: $qrcodeData)
             } else if state == .SelfScanning{
-                SDKPackage(userID: $userID, callbackURL: $callbackURL, qrcodeData: $qrcodeData, paymentCallbackHandler: callback)
+                SDKPackage(paymentFlowType: $paymentFlowType ,userID: $userID, callbackURL: $callbackURL, qrcodeData: $qrcodeData, paymentCallbackHandler: callback)
+ 
             }
         }
     }
