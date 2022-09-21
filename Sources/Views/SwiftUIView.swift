@@ -30,8 +30,7 @@ public struct SDKPackage : View {
     
     public init(paymentFlowType: Binding<PaymentFlowType> = .constant(.SDKContext),userID: Binding<String> ,callbackURL: Binding<String>, qrcodeData: Binding<String>, paymentCallbackHandler: @escaping (_ type:String,_ type: Any) -> Void) {
         
-       
-        
+
         _userID = userID
         _callbackURL = callbackURL
         _qrcodeData = qrcodeData
