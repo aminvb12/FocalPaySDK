@@ -82,7 +82,7 @@ public struct FocalpayAppSDK: View {
             if state == .PaymentResult {
                 ReceiptView( storeID: $store_id, orderID: $order_id, qrcodeData: $qrcodeData)
             } else if state == .SelfScanning{
-                SDKPackage(paymentFlowType: $paymentFlowType ,userID: $userID, callbackURL: $callbackURL, qrcodeData: $qrcodeData, paymentCallbackHandler: callback)
+                SDKPackage(paymentFlowType: $paymentFlowType ,userID: $userID, callbackURL: $callbackURL, qrcodeData: $qrcodeData, paymentCallbackHandler: handler)
  
             }
         }
